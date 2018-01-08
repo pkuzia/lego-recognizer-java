@@ -7,6 +7,8 @@ import pl.pkuzia.services.RecognizerService;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -17,9 +19,9 @@ public class Main {
         FileService fileService = new FileService();
         RecognizerService recognizerService = new RecognizerService();
 
-        File image = fileService.loadFile(args);
-        Mat resultImage = recognizerService.recognizeLogotype(image);
+        List<File> images = fileService.loadFile();
+        List<Mat> resultImages = images.stream().map(recognizerService::recognizeLogotype).collect(Collectors.toList());
 
-        fileService.saveFile(resultImage, image.getAbsolutePath());
+        fileService.saveFile(resultImages);
     }
 }
