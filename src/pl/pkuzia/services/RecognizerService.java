@@ -2,6 +2,8 @@ package pl.pkuzia.services;
 
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
+import pl.pkuzia.models.BlackPix;
+import pl.pkuzia.models.WhitePix;
 
 import java.io.File;
 
@@ -18,7 +20,15 @@ public class RecognizerService {
     }
 
     private void binarizationImage(Mat img) {
-
+        for (int row = 0; row < img.rows(); row++) {
+            for (int col = 0; col < img.cols(); col++) {
+                if (img.get(row, col)[0] > 125) {
+                    img.put(row, col, new BlackPix().values());
+                } else {
+                    img.put(row, col, new WhitePix().values());
+                }
+            }
+        }
     }
 
     private void convertToGray(Mat img) {
