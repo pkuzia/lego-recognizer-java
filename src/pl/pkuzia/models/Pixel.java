@@ -13,12 +13,11 @@ import java.util.stream.Stream;
 
 public class Pixel {
 
-    public static final int binarizationValue = 125;
+    private static final int binarizationValue = 125;
 
     private Mat img;
-    //TODO: Change to private
-    public int row;
-    public int col;
+    private int row;
+    private int col;
 
     Pixel(Mat img, int row, int col) {
         this.img = img;

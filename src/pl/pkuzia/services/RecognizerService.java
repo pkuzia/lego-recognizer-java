@@ -19,32 +19,44 @@ public class RecognizerService {
         ImagePixel imagePixel = new ImagePixel(img);
         convertToGray(imagePixel);
         thresholdingImage(imagePixel);
-        segmentationImage(imagePixel);
+        List<Segment> segments = segmentationImage(imagePixel);
+//        colorizeSegments(segments);
         return img;
     }
 
     private List<Segment> segmentationImage(ImagePixel img) {
         ArrayList<Segment> list = new ArrayList<>();
-        img.pixels.forEach(pixel -> {
+        img.getPixels().forEach(pixel -> {
             if (pixel.isBlack() && img.notInSegment(list, pixel)) {
                 Segment segment = new Segment(blackFlood(pixel));
+                if (segment.size() > 200) {
+                    list.add(segment);
+                }
             }
         });
         return list;
     }
 
     private void thresholdingImage(ImagePixel img) {
-        img.pixels.forEach(Pixel::thresholdingPixel);
+        img.getPixels().forEach(Pixel::thresholdingPixel);
     }
 
     private void convertToGray(ImagePixel img) {
-        img.pixels.forEach(Pixel::convertToGray);
+        img.getPixels().forEach(Pixel::convertToGray);
+    }
+
+    private void colorizeSegments(List<Segment> segments) {
+        Random randomGenerator = new Random();
+
+
+        segments.forEach(segment -> {
+            double[] segmentColor = { randomGenerator.nextInt(256), randomGenerator.nextInt(256),
+                    randomGenerator.nextInt(256) };
+            segment.getPixels().forEach(pix -> pix.colorPixel(segmentColor));
+        });
     }
 
     private Set<Pixel> blackFlood(Pixel start) {
-        Random randomGenerator = new Random();
-        double[] segmentColor = {randomGenerator.nextInt(256), randomGenerator.nextInt(256),
-                randomGenerator.nextInt(256)};
 
         HashSet<Pixel> segment = new HashSet<>();
         HashSet<Pixel> enqueued = new HashSet<>();
@@ -59,7 +71,6 @@ public class RecognizerService {
                     .filter(Pixel::isBlack)
                     .filter(pix -> !enqueued.contains(pix))
                     .forEach(pix -> {
-                        pix.colorPixel(segmentColor);
                         queue.add(pix);
                         enqueued.add(pix);
                     });

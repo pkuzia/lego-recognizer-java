@@ -11,8 +11,8 @@ import java.util.List;
 
 public class ImagePixel {
 
-    public Mat img;
-    public List<Pixel> pixels;
+    private Mat img;
+    private List<Pixel> pixels;
 
     public ImagePixel(Mat img) {
         pixels = new ArrayList<>();
@@ -22,6 +22,14 @@ public class ImagePixel {
                 pixels.add(new Pixel(img, row, col));
             }
         }
+    }
+
+    public Mat getImg() {
+        return img;
+    }
+
+    public List<Pixel> getPixels() {
+        return pixels;
     }
 
     public boolean notInSegment(List<Segment> segments, Pixel pixel) {

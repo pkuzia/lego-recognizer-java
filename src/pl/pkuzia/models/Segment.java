@@ -7,13 +7,18 @@ import java.util.Set;
  */
 
 public class Segment {
+
     private Set<Pixel> pixels;
 
     public Segment(Set<Pixel> pixels) {
         this.pixels = pixels;
     }
 
-    long size() {
+    public Set<Pixel> getPixels() {
+        return pixels;
+    }
+
+    public long size() {
         return pixels.size();
     }
 
