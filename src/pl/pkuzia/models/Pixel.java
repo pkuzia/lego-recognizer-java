@@ -25,6 +25,14 @@ public class Pixel {
         this.col = col;
     }
 
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
     public double[] value() {
         return img.get(row, col);
     }
@@ -71,10 +79,18 @@ public class Pixel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Pixel hsvPixel = (Pixel) o;
+        Pixel pixel = (Pixel) o;
 
-        if (row != hsvPixel.row) return false;
-        if (col != hsvPixel.col) return false;
-        return img != null ? img.equals(hsvPixel.img) : hsvPixel.img == null;
+        if (row != pixel.row) return false;
+        if (col != pixel.col) return false;
+        return img != null ? img.equals(pixel.img) : pixel.img == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = img != null ? img.hashCode() : 0;
+        result = 31 * result + row;
+        result = 31 * result + col;
+        return result;
     }
 }

@@ -2,9 +2,7 @@ package pl.pkuzia.services;
 
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
-import pl.pkuzia.models.ImagePixel;
-import pl.pkuzia.models.Pixel;
-import pl.pkuzia.models.Segment;
+import pl.pkuzia.models.*;
 
 import java.io.File;
 import java.util.*;
@@ -16,11 +14,21 @@ public class RecognizerService {
 
     public Mat recognizeLogotype(File image) {
         Mat img = Imgcodecs.imread(image.getAbsolutePath());
-        ImagePixel imagePixel = new ImagePixel(img);
+        Mat processImg = img.clone();
+        ImagePixel imagePixel = new ImagePixel(processImg);
+        ImagePixel originalImage = new ImagePixel(img);
         convertToGray(imagePixel);
         thresholdingImage(imagePixel);
         List<Segment> segments = segmentationImage(imagePixel);
-//        colorizeSegments(segments);
+        colorizeSegments(segments);
+//        for (int i = 0; i < segments.size(); i++) {
+//            Moment moment = new Moment(segments.get(i).getPixels());
+//            System.out.println("Analyze segment number: " + i + " / " + segments.size());
+//            if (moment.legoMark()) {
+//                System.out.println("Logo found");
+//                new BoundingBox(originalImage, segments.get(i)).draw();
+//            }
+//        }
         return img;
     }
 
