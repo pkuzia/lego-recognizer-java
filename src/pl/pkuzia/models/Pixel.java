@@ -45,7 +45,7 @@ public class Pixel {
 
     public void thresholdingPixel() {
         double[] values = img.get(row, col);
-        if (values[0] > binarizationValue) {
+        if (values[2] > 140 && values[1] < 110 && values[0] < 110) {
             img.put(row, col, BlackPixel.values());
         } else {
             img.put(row, col, WhitePixel.values());

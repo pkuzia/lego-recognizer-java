@@ -16,11 +16,11 @@ public class FileService {
 
     public String[] fileNames() {
         return new String[] {
-                "/Users/Przemo/Praca/Projekty/lego-recognizer-java/1-kopia.jpg",
-//                "/Users/Przemo/Praca/Projekty/lego-recognizer-java/2.jpeg",
-//                "/Users/Przemo/Praca/Projekty/lego-recognizer-java/3.jpeg",
-//                "/Users/Przemo/Praca/Projekty/lego-recognizer-java/4-kopia.jpeg",
-//                "/Users/Przemo/Praca/Projekty/lego-recognizer-java/7.jpg"
+                "/Users/Przemo/Praca/Projekty/lego-recognizer-java/1.jpg",
+                "/Users/Przemo/Praca/Projekty/lego-recognizer-java/2.jpg",
+                "/Users/Przemo/Praca/Projekty/lego-recognizer-java/3.jpeg",
+                "/Users/Przemo/Praca/Projekty/lego-recognizer-java/4.jpg",
+                "/Users/Przemo/Praca/Projekty/lego-recognizer-java/5.jpg"
         };
     }
 

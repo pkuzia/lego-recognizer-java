@@ -20,11 +20,11 @@ public class BoundingBox {
             if ((between(px.getCol(), xMin - 1, xMin + 1)
                     || between(px.getCol(), xMax - 1, xMax + 1))
                     && between(px.getRow(), yMin, yMax)) {
-                px.colorPixel(WhitePixel.values());
+                px.colorPixel(GreenPixel.values());
             } else if ((between(px.getRow(), yMin - 1, yMin + 1)
                     || between(px.getRow(), yMax - 1, yMax + 1))
                     && between(px.getCol(), xMin, xMax)) {
-                px.colorPixel(WhitePixel.values());
+                px.colorPixel(GreenPixel.values());
             }
         });
     }

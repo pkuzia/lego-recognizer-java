@@ -17,18 +17,18 @@ public class RecognizerService {
         Mat processImg = img.clone();
         ImagePixel imagePixel = new ImagePixel(processImg);
         ImagePixel originalImage = new ImagePixel(img);
-        convertToGray(imagePixel);
+//        convertToGray(imagePixel);
         thresholdingImage(imagePixel);
         List<Segment> segments = segmentationImage(imagePixel);
-        colorizeSegments(segments);
-//        for (int i = 0; i < segments.size(); i++) {
-//            Moment moment = new Moment(segments.get(i).getPixels());
-//            System.out.println("Analyze segment number: " + i + " / " + segments.size());
-//            if (moment.legoMark()) {
-//                System.out.println("Logo found");
-//                new BoundingBox(originalImage, segments.get(i)).draw();
-//            }
-//        }
+//        colorizeSegments(segments);
+        for (int i = 0; i < segments.size(); i++) {
+            Moment moment = new Moment(segments.get(i).getPixels());
+            System.out.println("Analyze segment number: " + i + " / " + segments.size());
+            if (moment.legoMark()) {
+                System.out.println("Logo found");
+                new BoundingBox(originalImage, segments.get(i)).draw();
+            }
+        }
         return img;
     }
 
@@ -37,7 +37,7 @@ public class RecognizerService {
         img.getPixels().forEach(pixel -> {
             if (pixel.isBlack() && img.notInSegment(list, pixel)) {
                 Segment segment = new Segment(blackFlood(pixel));
-                if (segment.size() > 200) {
+                if (segment.size() > 700) {
                     list.add(segment);
                 }
             }
