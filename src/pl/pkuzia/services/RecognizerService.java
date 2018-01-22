@@ -45,6 +45,7 @@ public class RecognizerService {
                 colorizeSegments(segments);
                 return processImg;
         }
+        return img;
     }
 
     private List<Segment> segmentationImage(ImagePixel img) {
