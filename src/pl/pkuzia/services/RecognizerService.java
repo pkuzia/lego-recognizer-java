@@ -12,24 +12,39 @@ import java.util.*;
  */
 public class RecognizerService {
 
-    public Mat recognizeLogotype(File image) {
+    public enum RecognitionType {
+        segmentation,
+        fullRecognition
+    };
+
+    public Mat recognizeLogotype(File image, RecognitionType type) {
         Mat img = Imgcodecs.imread(image.getAbsolutePath());
         Mat processImg = img.clone();
+
         ImagePixel imagePixel = new ImagePixel(processImg);
         ImagePixel originalImage = new ImagePixel(img);
-//        convertToGray(imagePixel);
+
+        System.out.println("Thresholding image...");
         thresholdingImage(imagePixel);
+
+        System.out.println("Segmentation image...");
         List<Segment> segments = segmentationImage(imagePixel);
-//        colorizeSegments(segments);
-        for (int i = 0; i < segments.size(); i++) {
-            Moment moment = new Moment(segments.get(i).getPixels());
-            System.out.println("Analyze segment number: " + i + " / " + segments.size());
-            if (moment.legoMark()) {
-                System.out.println("Logo found");
-                new BoundingBox(originalImage, segments.get(i)).draw();
-            }
+
+        switch (type) {
+            case fullRecognition:
+                for (int i = 0; i < segments.size(); i++) {
+                    Moment moment = new Moment(segments.get(i).getPixels());
+                    System.out.println("Analyze segment number: " + i + " / " + segments.size());
+                    if (moment.legoMark()) {
+                        System.out.println("Logo found");
+                        new BoundingBox(originalImage, segments.get(i)).draw();
+                    }
+                }
+                return img;
+            case segmentation:
+                colorizeSegments(segments);
+                return processImg;
         }
-        return img;
     }
 
     private List<Segment> segmentationImage(ImagePixel img) {
